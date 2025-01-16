@@ -55,32 +55,6 @@ const Sidebar = () => {
               <span>Orders</span>
             </li>
           </Link>
-
-        
-          <p className="title">CHARTS</p>
-          <li>
-            <InsertChartOutlinedSharpIcon className="icon" />
-            <span>Stats</span>
-          </li>
-          <li>
-            <NotificationsActiveOutlinedIcon className="icon" />
-            <span>Notifications</span>
-          </li>
-          <p className="title">USER INTERFACE</p>
-          <li>
-            <ManageAccountsOutlinedIcon className="icon" />
-            <span>Profile</span>
-          </li>
-          <li>
-            <CalendarMonthOutlinedIcon className="icon" />
-            <span>Calendar</span>
-          </li>
-          
-
-          <li>
-            <ExitToAppOutlinedIcon className="icon" />
-            <span>Logout</span>
-          </li>
         </ul>
       </div>
     </div>

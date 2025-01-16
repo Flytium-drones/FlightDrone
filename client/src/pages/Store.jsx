@@ -201,9 +201,11 @@ const Store = () => {
   }
 
   return (
+    
     <div>
       {/* <MainComponent /> */}
       <div className="w-full px-4 py-8">
+        
         {/* Main content container with filters and products */}
         <div className="flex flex-col md:flex-row gap-6">
           {/* Left sidebar filters */}
@@ -479,7 +481,11 @@ const Store = () => {
           </div>
         </div>
       </Modal>
+
+      
     </div>
+
+    
   );
 };
 

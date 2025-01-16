@@ -2,7 +2,7 @@
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    height: 100vh;
+    height: 90vh;
     padding: 20px;
     overflow: hidden; 
   }
@@ -11,7 +11,7 @@
   .image-stack {
     position: relative;
     width: 50%;
-    height: 80%;
+    height: 60%;
     perspective: 1000px; 
   }
   
@@ -75,7 +75,7 @@
   .book-btn:hover {
     background-color: #333;
   }
-  
+/*   
   .arrow-controls {
     display: flex;
     gap: 30px;
@@ -93,5 +93,47 @@
   
   .arrow-btn:hover {
     background-color: #bbb;
+  } */
+  .arrow-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    gap: 10px;
   }
   
+  .arrow-btn {
+    background: rgba(255, 255, 255, 0.7); /* Semi-transparent background */
+    border: none;
+    padding: 15px;
+    font-size: 24px;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    outline: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Light shadow for depth */
+  }
+  
+  .arrow-btn:hover {
+    background: rgba(255, 255, 255, 0.9); /* Slightly lighter on hover */
+    transform: scale(1.1); /* Slight zoom-in effect */
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15); /* More prominent shadow */
+  }
+  
+  .arrow-btn:focus {
+    outline: none; /* Remove focus outline */
+  }
+  
+  .arrow-btn.left {
+    margin-right: auto;
+  }
+  
+  .arrow-btn.right {
+    margin-left: auto;
+  }
+
+  @media (max-width: 768px) {
+    .carousel-container {
+      display: none;
+    }
+  }

@@ -1,14 +1,23 @@
-.chk{
+/* .chk{
     position: relative;
         --tw-bg-opacity: 1;
         background-color: rgb(0 0 0 / var(--tw-bg-opacity, 1));
         height: 100vh;
         z-index: 10;
-}
+} */
+
+
 
 
 @media (max-width: 768px) {
-    .chk{
+    /* .chk{
         height: 62vh;
+    } */
+
+    #custom-mobile-style{
+        width: 471px;
+        height: 486px;
+        top: -41%;
+        right: 1rem;
     }
 }

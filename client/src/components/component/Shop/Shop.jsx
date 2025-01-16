@@ -3,54 +3,76 @@ import React from 'react';
 const ShopByType = () => {
   const categories = [
     {
-      image: '/C1.png',
+      image: '/ad.png',
       title: 'DRONES',
     },
     {
-      image: '/C1.png',
+      image: '/frame.png',
       title: 'FPV DRONE FRAMES',
     },
     {
-      image: '/C1.png',
-      title: 'FPV DRONE EQUIPMENTS',
+      image: '/FCpix.png',
+      title: 'Flight Controllers',
     },
     {
-      image: '/C1.png',
-      title: 'FPV DRONE MOTORS',
+      image: '/motor.png',
+      title: 'DRONE MOTORS',
     },
     {
-      image: '/C1.png',
-      title: 'FPV DRONE MOTORS',
+      image: 'R-pi.png',
+      title: 'Microcontrollers',
     },
     {
-      image: '/C1.png',
-      title: 'FPV DRONE MOTORS',
+      image: '/ESC.png',
+      title: 'ESC',
     },
     {
-      image: '/C1.png',
-      title: 'FPV DRONE MOTORS',
+      image: '/sensors.png',
+      title: 'IoT Sensors',
     },
     {
-      image: '/C1.png',
-      title: 'FPV DRONE MOTORS',
+      image: '/RT.png',
+      title: 'Receiver & Transmitter',
     },
   ];
 
   return (
     <section className="py-10">
-      <h2 className="text-3xl font-bold text-center mb-8">OUR PRODUCT</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 px-4">
+      <h2 className="text-3xl font-bold text-center mb-8 text-gray-800">OUR PRODUCT</h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 px-4">
         {categories.map((category, index) => (
-          <div key={index} className="relative overflow-hidden rounded-lg transition-transform duration-300 hover:scale-105 hover:shadow-xl">
-            <img src={category.image} alt={category.title} className="w-full h-48 object-cover transition duration-300" />
-            <div className="absolute inset-0 bg-black bg-opacity-0 hover:bg-opacity-40 transition duration-300" />
-            <div className="p-4 text-center relative z-10">
-              <h3 className="text-lg font-semibold text-black">{category.title}</h3>
+          <div
+            key={index}
+            className="relative overflow-hidden rounded-xl bg-white shadow-lg transition-all duration-300 hover:shadow-2xl group"
+          >
+            <div className="relative w-full h-64 overflow-hidden rounded-xl">
+              <img
+                src={category.image}
+                alt={category.title}
+                className="w-full h-full object-contain transition-all duration-500 group-hover:scale-105 group-hover:rotate-[15deg] group-hover:translate-x-3 group-hover:translate-y-3 group-hover:opacity-100"
+              />
+            </div>
+
+            {/* Title positioned at the bottom with adjusted color */}
+            <div className="absolute bottom-4 left-0 right-0 px-6 py-3 text-center z-10">
+              <h3 className="text-lg font-semibold text-gray-800 group-hover:text-gray-600">
+                {category.title}
+              </h3>
+            </div>
+
+            {/* Shadow effect on hover */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-30 transition-all duration-500 group-hover:opacity-60"></div>
+
+            <div className="absolute bottom-0 left-0 right-0 p-6 text-center transform translate-y-20 group-hover:translate-y-0 transition-all duration-500">
+              <p className="text-sm text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                {category.description}
+              </p>
             </div>
           </div>
         ))}
       </div>
     </section>
+
   );
 };
 

@@ -63,8 +63,8 @@ const GalleryCard = () => {
           {images[currentIndex].buttonText}
         </button>
         <div className="arrow-controls">
-          <button onClick={prevImage} className="arrow-btn">&#8592;</button>
-          <button onClick={nextImage} className="arrow-btn">&#8594;</button>
+          <button onClick={prevImage} className="arrow-btn left">&#8592;</button>
+          <button onClick={nextImage} className="arrow-btn right">&#8594;</button>
         </div>
       </div>
     </div>
