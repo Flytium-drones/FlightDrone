@@ -23,8 +23,10 @@ for (const envVar of requiredEnvVars) {
 const adminConfig = {
   name: process.env.ADMIN_NAME || "FlightDrone Admin",
   email: process.env.ADMIN_EMAIL || "admin@flightdrone.com",
-  phone: process.env.ADMIN_PHONE || "9999999999",
-  address: process.env.ADMIN_ADDRESS || "FlightDrone HQ",
+  phone: process.env.ADMIN_PHONE || "9236993440",
+  address: process.env.ADMIN_ADDRESS || `Flytium Drones
+H. N0 - 49C Near Paidleganj,Gorakhpur, Uttar Pradesh
+India`,
   password: process.env.ADMIN_PASSWORD || "Admin@123",
   answer: process.env.ADMIN_SECURITY_ANSWER || "flightdrone",
 };
