@@ -43,11 +43,14 @@ export const loginUser = async (req, res) => {
       return res.status(400).send({ message: 'Please enter all fields' });
     }
 
-    const user = await User.findOne({ email });
+    const cleanEmail = email.trim();
+    const cleanPassword = password.trim();
+
+    const user = await User.findOne({ email: cleanEmail });
     if (!user) return res.status(400).json({ message: 'Invalid email or password' });
 
     // Compare passwords
-    const isMatch = await comparePassword(password, user.password);
+    const isMatch = await comparePassword(cleanPassword, user.password);
     if (!isMatch) return res.status(400).json({ message: 'Invalid email or password' });
 
     // Create JWT token
