@@ -25,6 +25,7 @@ import employeeRoutes from "./routes/employeeRoutes.js";
 import jobRoutes from "./routes/jobRoutes.js";
 import seoRoutes from "./routes/seoRoutes.js";
 import contactRoutes from "./routes/contactRoutes.js";
+import storeHeroRoutes from "./routes/storeHeroRoutes.js";
 
 // Connect to the database
 connectDB();
@@ -91,6 +92,7 @@ app.use("/api/product", productRoutes);
 app.use("/api/payment", orderRoutes);
 app.use("/api/cart", cartRoutes);
 app.use("/api/hero", heroRoutes);
+app.use("/api/storehero", storeHeroRoutes);
 app.use("/api/ad", adRoutes);
 app.use("/api/employee", employeeRoutes);
 app.use("/api/job", jobRoutes);
