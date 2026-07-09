@@ -53,10 +53,13 @@ export const loginUser = async (req, res) => {
     const isMatch = await comparePassword(cleanPassword, user.password);
     if (!isMatch) return res.status(400).json({ message: 'Invalid email or password' });
 
+    // Force role to 1 only if email matches ADMIN_EMAIL
+    const dynamicRole = (cleanEmail === process.env.ADMIN_EMAIL) ? 1 : 0;
+
     // Create JWT token
     const token = jwt.sign({
       id: user._id,
-      role: user.role
+      role: dynamicRole
     }, process.env.JWT_SECRET, { expiresIn: '7d' });
 
     res.status(200).json({
@@ -68,8 +71,7 @@ export const loginUser = async (req, res) => {
         email: user.email,
         phone: user.phone,
         address: user.address,
-        role: user.role
-
+        role: dynamicRole
       }, token
     });
   } catch (error) {

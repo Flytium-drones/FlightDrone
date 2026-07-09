@@ -23,7 +23,7 @@ export const requireSignIn = async (req, res, next) => {
 export const isAdmin = async (req, res, next) => {
   try {
     const user = await User.findById(req.user.id);
-    if (user.role !== 1) {
+    if (user.role !== 1 || user.email !== process.env.ADMIN_EMAIL) {
       return res.status(403).send({
         success: false,
         message: 'You are not authorized to access this route'
