@@ -4,6 +4,7 @@ import Order from "../models/Order.js";
 import Product from "../models/Product.js";
 import Cart from "../models/Cart.js";
 import User from "../models/User.js";
+import StoreHero from "../models/StoreHero.js";
 import { 
   sendOrderConfirmationEmail, 
   sendOrderNotificationToAdmin,
@@ -47,7 +48,20 @@ export const createOrder = async (req, res) => {
 
       // Validate stock availability for all cart items
       for (const item of cartItems) {
-        const product = await Product.findById(item._id);
+        let product = await Product.findById(item._id);
+        if (!product) {
+          const hero = await StoreHero.findById(item._id);
+          if (hero) {
+            product = {
+              _id: hero._id,
+              name: item.name || hero.title,
+              description: hero.description,
+              price: item.price || hero.discountedPrice || hero.price,
+              image: hero.image,
+              quantity: 9999
+            };
+          }
+        }
         if (!product) {
           return res.status(400).json({
             success: false,
@@ -84,7 +98,20 @@ export const createOrder = async (req, res) => {
 
       // Validate and calculate total from provided products
       for (const item of products) {
-        const product = await Product.findById(item._id || item.product);
+        let product = await Product.findById(item._id || item.product);
+        if (!product) {
+          const hero = await StoreHero.findById(item._id || item.product);
+          if (hero) {
+            product = {
+              _id: hero._id,
+              name: item.name || hero.title,
+              description: hero.description,
+              price: item.price || hero.discountedPrice || hero.price,
+              image: hero.image,
+              quantity: 9999
+            };
+          }
+        }
         if (!product) {
           return res.status(400).json({
             success: false,
