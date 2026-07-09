@@ -34,7 +34,9 @@ const app = express();
 
 // CORS Configuration for Production
 const corsOptions = {
-  origin: "*",
+  origin: function (origin, callback) {
+    callback(null, true);
+  },
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
