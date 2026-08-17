@@ -1,5 +1,5 @@
 import express from "express";
-import { requireSignIn, isAdmin } from "../middlewares/authMiddleware.js";
+import { requireSignIn, isAdmin } from "../middleware/authMiddleware.js";
 import {
   createCertificateController,
   getAllCertificatesController,
