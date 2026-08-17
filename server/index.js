@@ -26,6 +26,7 @@ import jobRoutes from "./routes/jobRoutes.js";
 import seoRoutes from "./routes/seoRoutes.js";
 import contactRoutes from "./routes/contactRoutes.js";
 import storeHeroRoutes from "./routes/storeHeroRoutes.js";
+import certificateRoutes from "./routes/certificateRoutes.js";
 
 // Connect to the database
 connectDB();
@@ -94,6 +95,7 @@ app.use("/api/employee", employeeRoutes);
 app.use("/api/job", jobRoutes);
 app.use("/api/seo", seoRoutes);
 app.use("/api/contact", contactRoutes);
+app.use("/api/certificate", certificateRoutes);
 // Start the server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
