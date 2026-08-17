@@ -3,7 +3,7 @@ import Certificate from "../models/Certificate.js";
 // Create a new certificate
 export const createCertificateController = async (req, res) => {
   try {
-    const { certificateId, studentName, courseName, issueDate, grade, description, pdfUrl } = req.body;
+    const { certificateId, studentName, courseName, issueDate, pdfUrl } = req.body;
 
     // Validation
     if (!certificateId || !studentName || !courseName || !issueDate || !pdfUrl) {
@@ -27,8 +27,6 @@ export const createCertificateController = async (req, res) => {
       studentName,
       courseName,
       issueDate,
-      grade,
-      description,
       pdfUrl,
     }).save();
 

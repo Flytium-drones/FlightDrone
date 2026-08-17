@@ -19,12 +19,6 @@ const certificateSchema = new mongoose.Schema(
       type: Date,
       required: true,
     },
-    grade: {
-      type: String,
-    },
-    description: {
-      type: String,
-    },
     pdfUrl: {
       type: String,
       required: true,
