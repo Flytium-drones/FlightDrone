@@ -3,13 +3,13 @@ import Certificate from "../models/Certificate.js";
 // Create a new certificate
 export const createCertificateController = async (req, res) => {
   try {
-    const { certificateId, pdfUrl } = req.body;
+    const { certificateId, studentName, courseName, issueDate, grade, description, pdfUrl } = req.body;
 
     // Validation
-    if (!certificateId || !pdfUrl) {
+    if (!certificateId || !studentName || !courseName || !issueDate || !pdfUrl) {
       return res.status(400).send({
         success: false,
-        message: "Certificate ID and PDF are required",
+        message: "All required fields must be provided, including PDF",
       });
     }
 
@@ -24,6 +24,11 @@ export const createCertificateController = async (req, res) => {
 
     const certificate = await new Certificate({
       certificateId,
+      studentName,
+      courseName,
+      issueDate,
+      grade,
+      description,
       pdfUrl,
     }).save();
 
