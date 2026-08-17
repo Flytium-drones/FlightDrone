@@ -86,20 +86,26 @@ export const deleteCertificateController = async (req, res) => {
 // Verify a certificate
 export const verifyCertificateController = async (req, res) => {
   try {
-    const { certificateId } = req.params;
+    const { certificateId } = req.params; // Using this as the search query
 
-    const certificate = await Certificate.findOne({ certificateId });
-    if (!certificate) {
+    const certificates = await Certificate.find({
+      $or: [
+        { certificateId: { $regex: new RegExp(`^${certificateId}$`, "i") } },
+        { studentName: { $regex: new RegExp(certificateId, "i") } }
+      ]
+    });
+
+    if (!certificates || certificates.length === 0) {
       return res.status(404).send({
         success: false,
-        message: "Certificate not found. Invalid Certificate ID.",
+        message: "No certificates found with this Name or ID.",
       });
     }
 
     res.status(200).send({
       success: true,
       message: "Certificate verified successfully",
-      certificate,
+      certificates, // Now returning an array
     });
   } catch (error) {
     console.log(error);
