@@ -5,7 +5,8 @@ import {
   createCodOrder,
   getUserOrders, 
   getAllOrders, 
-  updateOrderStatus 
+  updateOrderStatus,
+  cancelOrder
 } from "../controllers/orderController.js";
 import { isAdmin, requireSignIn } from '../middleware/authMiddleware.js';
 
@@ -20,6 +21,7 @@ router.post("/create-cod-order", requireSignIn, createCodOrder);
 router.get("/user-orders", requireSignIn, getUserOrders);
 router.get("/all-orders", requireSignIn, isAdmin, getAllOrders);
 router.put("/update-status/:orderId", requireSignIn, isAdmin, updateOrderStatus);
+router.put("/cancel-order/:orderId", requireSignIn, cancelOrder);
 
 // Legacy routes for backward compatibility
 router.post("/order", requireSignIn, createOrder);

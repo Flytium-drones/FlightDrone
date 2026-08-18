@@ -42,6 +42,7 @@ const orderSchema = new mongoose.Schema({
     enum: ['Processing', 'Confirmed', 'Shipped', 'Delivered', 'Cancelled'] 
   },
   totalAmount: { type: Number, required: true },
+  cancelReason: { type: String }
 }, { timestamps: true });
 
 

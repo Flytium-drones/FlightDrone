@@ -133,90 +133,41 @@ export const sendOrderNotificationToAdmin = async (order) => {
       <html>
       <head>
         <meta charset="utf-8">
-        <title>New Order Received - Flytium Drones</title>
+        <title>New Order Alert - Flytium Drones</title>
         <style>
           body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0; }
           .container { max-width: 600px; margin: 0 auto; padding: 20px; }
           .header { background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%); color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0; }
           .header h1 { margin: 0; font-size: 28px; }
-          .content { background: white; padding: 30px; border: 1px solid #ddd; }
-          .alert { background: #fff3cd; border: 1px solid #ffeaa7; padding: 15px; border-radius: 8px; margin: 20px 0; }
-          .order-info { background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0; }
-          .product-item { border-bottom: 1px solid #eee; padding: 15px 0; display: flex; align-items: center; }
-          .product-item:last-child { border-bottom: none; }
-          .product-image { width: 60px; height: 60px; object-fit: cover; border-radius: 8px; margin-right: 15px; }
-          .product-details { flex: 1; }
-          .total-section { background: #e9ecef; padding: 20px; border-radius: 8px; margin-top: 20px; }
-          .total-amount { font-size: 24px; font-weight: bold; color: #28a745; text-align: center; }
+          .content { background: white; padding: 30px; border: 1px solid #ddd; text-align: center; }
+          .date-info { font-size: 18px; margin-top: 20px; font-weight: bold; }
           .footer { background: #f8f9fa; padding: 20px; text-align: center; border-radius: 0 0 10px 10px; }
-          .btn { background: #ee5a24; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; display: inline-block; margin: 10px 0; }
+          .btn { background: #ee5a24; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; display: inline-block; margin: 30px 0; }
         </style>
       </head>
       <body>
         <div class="container">
           <div class="header">
             <h1>🔔 New Order Alert!</h1>
-            <p>A new order has been placed on Flytium Drones</p>
           </div>
           
           <div class="content">
-            <div class="alert">
-              <strong>⚡ Action Required:</strong> A new order needs processing and fulfillment.
-            </div>
-            
-            <div class="order-info">
-              <h3>Order Information</h3>
-              <p><strong>Order ID:</strong> #${order._id.toString().slice(-8).toUpperCase()}</p>
-              <p><strong>Order Date:</strong> ${new Date(order.orderDate).toLocaleDateString('en-IN', {
+            <h2>A new order has been placed.</h2>
+            <div class="date-info">
+              Date: ${new Date(order.orderDate || order.createdAt).toLocaleDateString('en-IN', {
                 day: 'numeric',
                 month: 'long',
                 year: 'numeric',
                 hour: '2-digit',
                 minute: '2-digit'
-              })}</p>
-              <p><strong>Total Amount:</strong> ₹${order.totalAmount.toLocaleString()}</p>
-              <p><strong>Payment Status:</strong> <span style="color: #28a745;">✅ Paid</span></p>
-              <p><strong>Current Status:</strong> ${order.status}</p>
+              })}
             </div>
             
-            <h3>Customer Details:</h3>
-            <div class="order-info">
-              <p><strong>Name:</strong> ${order.buyer.name}</p>
-              <p><strong>Email:</strong> ${order.buyer.email}</p>
-              <p><strong>Phone:</strong> ${order.buyer.phone || 'Not provided'}</p>
-            </div>
-            
-            <h3>Shipping Address:</h3>
-            <div class="order-info">
-              <p>${order.shippingAddress.address}</p>
-              <p>${order.shippingAddress.city}, ${order.shippingAddress.state || ''} ${order.shippingAddress.pincode || ''}</p>
-              <p>Phone: ${order.shippingAddress.phone}</p>
-            </div>
-            
-            <h3>Items to Ship:</h3>
-            ${order.products.map(item => `
-              <div class="product-item">
-                <img src="${item.image}" alt="${item.name}" class="product-image" onerror="this.src='https://via.placeholder.com/60x60?text=Product'">
-                <div class="product-details">
-                  <div style="font-weight: bold;">${item.name}</div>
-                  <div>Qty: ${item.quantity} × ₹${item.price.toLocaleString()}</div>
-                </div>
-                <div style="font-weight: bold; color: #28a745;">₹${(item.price * item.quantity).toLocaleString()}</div>
-              </div>
-            `).join('')}
-            
-            <div class="total-section">
-              <div class="total-amount">Order Total: ₹${order.totalAmount.toLocaleString()}</div>
-            </div>
-            
-            <div style="text-align: center; margin: 30px 0;">
-              <a href="http://localhost:5173/admin/orders" class="btn">Manage Order</a>
-            </div>
+            <a href="https://flytiumdrones.com/admin/orders" class="btn">View Order Details</a>
           </div>
           
           <div class="footer">
-            <p>Please process this order at your earliest convenience.</p>
-            <p>Flytium Drones Admin Panel</p>
+            <p>Flytium Drones Admin System</p>
           </div>
         </div>
       </body>

@@ -588,3 +588,66 @@ export const updateOrderStatus = async (req, res) => {
     });
   }
 };
+
+// Cancel order by customer
+export const cancelOrder = async (req, res) => {
+  try {
+    const { orderId } = req.params;
+    const { cancelReason } = req.body;
+    
+    if (!cancelReason) {
+      return res.status(400).json({ success: false, message: "Cancel reason is required" });
+    }
+
+    const order = await Order.findById(orderId);
+
+    if (!order) {
+      return res.status(404).json({ success: false, message: "Order not found" });
+    }
+
+    // Verify order belongs to the user
+    if (order.buyer._id.toString() !== req.user._id.toString()) {
+      return res.status(403).json({ success: false, message: "Unauthorized to cancel this order" });
+    }
+
+    if (order.status === 'Shipped' || order.status === 'Delivered') {
+      return res.status(400).json({ success: false, message: "Order cannot be cancelled as it is already shipped or delivered" });
+    }
+
+    if (order.status === 'Cancelled') {
+      return res.status(400).json({ success: false, message: "Order is already cancelled" });
+    }
+
+    const previousStatus = order.status;
+    
+    order.status = 'Cancelled';
+    order.cancelReason = cancelReason;
+    await order.save();
+
+    // Re-add inventory
+    for (const item of order.products) {
+      await Product.findByIdAndUpdate(
+        item.product,
+        { $inc: { quantity: item.quantity } }
+      );
+    }
+
+    // Optionally send email about cancellation
+    sendOrderStatusUpdateEmail(order, previousStatus).catch(error => {
+      console.error("Error sending status update email:", error);
+    });
+
+    res.status(200).json({
+      success: true,
+      message: "Order cancelled successfully",
+      order
+    });
+  } catch (error) {
+    console.error("Cancel order error:", error);
+    res.status(500).json({
+      success: false,
+      message: "Error cancelling order",
+      error: error.message
+    });
+  }
+};
