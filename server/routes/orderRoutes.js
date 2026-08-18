@@ -1,7 +1,8 @@
 import express from "express";
 import { 
   createOrder, 
-  verifyPayment, 
+  verifyPayment,
+  createCodOrder,
   getUserOrders, 
   getAllOrders, 
   updateOrderStatus 
@@ -13,6 +14,7 @@ const router = express.Router();
 // Payment routes
 router.post("/create-order", requireSignIn, createOrder);
 router.post("/verify-payment", requireSignIn, verifyPayment);
+router.post("/create-cod-order", requireSignIn, createCodOrder);
 
 // Order management routes
 router.get("/user-orders", requireSignIn, getUserOrders);

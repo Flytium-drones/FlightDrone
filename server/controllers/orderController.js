@@ -217,6 +217,112 @@ export const createOrder = async (req, res) => {
     });
   }
 };
+// Create COD Order
+export const createCodOrder = async (req, res) => {
+  try {
+    const { orderDetails, useCart } = req.body;
+    const userId = req.user.id;
+
+    if (!orderDetails || !orderDetails.products || !orderDetails.shippingAddress) {
+      return res.status(400).json({
+        success: false,
+        message: "Missing order details"
+      });
+    }
+
+    // Get user details
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found"
+      });
+    }
+
+    // Final stock validation before creating order
+    let calculatedTotal = 0;
+    for (const item of orderDetails.products) {
+      const product = await Product.findById(item.product);
+      if (!product) {
+        return res.status(400).json({
+          success: false,
+          message: `Product ${item.name} no longer available`
+        });
+      }
+      
+      if (product.quantity < item.quantity) {
+        return res.status(400).json({
+          success: false,
+          message: `Insufficient stock for ${product.name}`
+        });
+      }
+      calculatedTotal += product.price * item.quantity;
+    }
+
+    // Create order in database
+    const newOrder = new Order({
+      products: orderDetails.products,
+      payment: {
+        amount: calculatedTotal,
+        currency: "INR",
+        status: "Pending", // Pending payment
+        method: "COD"
+      },
+      buyer: {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        phone: user.phone
+      },
+      shippingAddress: orderDetails.shippingAddress,
+      totalAmount: calculatedTotal,
+      status: "Processing"
+    });
+
+    await newOrder.save();
+
+    // Update product quantities
+    for (const item of orderDetails.products) {
+      await Product.findByIdAndUpdate(
+        item.product,
+        { $inc: { quantity: -item.quantity } },
+        { new: true }
+      );
+    }
+
+    // Clear user's cart if order was created from cart
+    if (useCart) {
+      await Cart.findOneAndUpdate(
+        { user: userId },
+        { items: [] }
+      );
+    }
+
+    // Send email notifications
+    Promise.all([
+      sendOrderConfirmationEmail(newOrder),
+      sendOrderNotificationToAdmin(newOrder)
+    ]).then(results => {
+      console.log("COD Order emails sent successfully");
+    }).catch(error => {
+      console.error("Failed to send COD order emails:", error);
+    });
+
+    res.json({
+      success: true,
+      message: "Order placed successfully via Cash on Delivery",
+      order: newOrder
+    });
+
+  } catch (error) {
+    console.error("Create COD order error:", error);
+    res.status(500).json({
+      success: false,
+      message: "Failed to create COD order",
+      error: error.message,
+    });
+  }
+};
 
 // Verify payment and store order in DB with enhanced validation
 export const verifyPayment = async (req, res) => {
