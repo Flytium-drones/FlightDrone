@@ -92,7 +92,7 @@ export const sendOrderConfirmationEmail = async (order) => {
             <p>We'll send you another email with tracking information once your order ships.</p>
             
             <div style="text-align: center; margin: 30px 0;">
-              <a href="http://localhost:5173/user/orders" class="btn">Track Your Order</a>
+              <a href="https://flytiumdrones.com/dashboard/user/orders" class="btn">Track Your Order</a>
             </div>
           </div>
           
@@ -256,7 +256,7 @@ export const sendOrderStatusUpdateEmail = async (order, previousStatus) => {
             ` : ''}
             
             <div style="text-align: center; margin: 30px 0;">
-              <a href="http://localhost:5173/user/orders" class="btn">View Order Details</a>
+              <a href="https://flytiumdrones.com/dashboard/user/orders" class="btn">View Order Details</a>
             </div>
           </div>
           
