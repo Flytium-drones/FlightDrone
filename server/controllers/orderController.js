@@ -239,29 +239,43 @@ export const createCodOrder = async (req, res) => {
       });
     }
 
-    // Final stock validation before creating order
+    // Final stock validation and format products
     let calculatedTotal = 0;
+    const orderProducts = [];
+    
     for (const item of orderDetails.products) {
-      const product = await Product.findById(item.product);
+      const productId = item.product || item._id;
+      const product = await Product.findById(productId);
       if (!product) {
         return res.status(400).json({
           success: false,
-          message: `Product ${item.name} no longer available`
+          message: `Product ${item.name || 'unknown'} no longer available`
         });
       }
       
-      if (product.quantity < item.quantity) {
+      const itemQuantity = item.quantity || 1;
+      if (product.quantity < itemQuantity) {
         return res.status(400).json({
           success: false,
           message: `Insufficient stock for ${product.name}`
         });
       }
-      calculatedTotal += product.price * item.quantity;
+      
+      orderProducts.push({
+        product: product._id,
+        name: product.name,
+        description: product.description,
+        price: item.price || product.price,
+        quantity: itemQuantity,
+        image: product.image
+      });
+      
+      calculatedTotal += (item.price || product.price) * itemQuantity;
     }
 
     // Create order in database
     const newOrder = new Order({
-      products: orderDetails.products,
+      products: orderProducts,
       payment: {
         amount: calculatedTotal,
         currency: "INR",
@@ -282,7 +296,7 @@ export const createCodOrder = async (req, res) => {
     await newOrder.save();
 
     // Update product quantities
-    for (const item of orderDetails.products) {
+    for (const item of orderProducts) {
       await Product.findByIdAndUpdate(
         item.product,
         { $inc: { quantity: -item.quantity } },
