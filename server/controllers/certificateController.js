@@ -88,10 +88,15 @@ export const verifyCertificateController = async (req, res) => {
   try {
     const { certificateId } = req.params; // Using this as the search query
 
+    const searchString = certificateId.trim();
+    
+    // Escape regex special characters to prevent errors
+    const escapedSearch = searchString.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+
     const certificates = await Certificate.find({
       $or: [
-        { certificateId: { $regex: new RegExp(`^${certificateId}$`, "i") } },
-        { studentName: { $regex: new RegExp(certificateId, "i") } }
+        { certificateId: { $regex: new RegExp(escapedSearch, "i") } },
+        { studentName: { $regex: new RegExp(escapedSearch, "i") } }
       ]
     });
 
