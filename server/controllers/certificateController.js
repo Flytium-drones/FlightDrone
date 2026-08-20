@@ -3,10 +3,10 @@ import Certificate from "../models/Certificate.js";
 // Create a new certificate
 export const createCertificateController = async (req, res) => {
   try {
-    const { certificateId, studentName, courseName, issueDate, pdfUrl } = req.body;
+    const { certificateId, studentName, rollNo, courseName, college, duration, startDate, endDate, issueDate, pdfUrl } = req.body;
 
     // Validation
-    if (!certificateId || !studentName || !courseName || !issueDate || !pdfUrl) {
+    if (!certificateId || !studentName || !rollNo || !courseName || !college || !duration || !startDate || !endDate || !issueDate || !pdfUrl) {
       return res.status(400).send({
         success: false,
         message: "All required fields must be provided, including PDF",
@@ -25,7 +25,12 @@ export const createCertificateController = async (req, res) => {
     const certificate = await new Certificate({
       certificateId,
       studentName,
+      rollNo,
       courseName,
+      college,
+      duration,
+      startDate,
+      endDate,
       issueDate,
       pdfUrl,
     }).save();

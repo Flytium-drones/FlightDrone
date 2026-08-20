@@ -11,7 +11,27 @@ const certificateSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    rollNo: {
+      type: String,
+      required: true,
+    },
     courseName: {
+      type: String,
+      required: true,
+    },
+    college: {
+      type: String,
+      required: true,
+    },
+    duration: {
+      type: String,
+      required: true,
+    },
+    startDate: {
+      type: String,
+      required: true,
+    },
+    endDate: {
       type: String,
       required: true,
     },
